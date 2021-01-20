@@ -20,13 +20,14 @@ import vazkii.botania.api.mana.ManaItemHandler;
 import vazkii.botania.common.core.handler.EquipmentHandler;
 import vazkii.botania.common.item.equipment.bauble.ItemManaRing;
 import vazkii.botania.common.item.ItemManaTablet;
+import vazkii.botania.common.item.ItemManaMirror;
 
 import net.alwinfy.mana2rf.ItemStackMixinUtil;
 import net.alwinfy.mana2rf.FEItemWrapper;
 
-@Mixin({ ItemManaRing.class, ItemManaTablet.class })
+@Mixin({ ItemManaRing.class, ItemManaTablet.class, ItemManaMirror.class })
 public abstract class MixinInventoryManaDispensers extends Item implements IManaItem {
-	private final int SPEED = 50; // half the speed of pool filling
+	private final int SPEED = 200;
 
 	protected MixinInventoryManaDispensers() {
 		super(new Item.Properties());
