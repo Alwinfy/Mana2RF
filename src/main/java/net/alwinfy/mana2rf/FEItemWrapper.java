@@ -8,11 +8,23 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import vazkii.botania.api.mana.IManaItem;
+import vazkii.botania.common.block.tile.mana.TileRFGenerator;
+
+import java.lang.reflect.Field;
 
 // Contractual guarantee: the ItemStack _will_ have CapabilityEnergy attached.
 // TODO: Some sort of cache?
 public class FEItemWrapper extends Item implements IManaItem {
-	public static final int MULTIPLIER = 10;
+	public static final int MULTIPLIER;
+	static {
+		int m = 10;
+		try {
+			Field f = TileRFGenerator.class.getField("MANA_TO_RF");
+			f.setAccessible(true);
+			m = f.getInt(null);
+		} catch (ReflectiveOperationException ex) {}
+		MULTIPLIER = m;
+	}
 
 	public FEItemWrapper() {
 		super(new Properties());

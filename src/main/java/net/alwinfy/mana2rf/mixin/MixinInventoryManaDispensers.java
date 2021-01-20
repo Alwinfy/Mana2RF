@@ -28,6 +28,11 @@ import net.alwinfy.mana2rf.FEItemWrapper;
 public abstract class MixinInventoryManaDispensers extends Item implements IManaItem {
 	private final int SPEED = 50; // half the speed of pool filling
 
+	protected MixinInventoryManaDispensers() {
+		super(new Item.Properties());
+		throw new AssertionError();
+	}
+
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
 		if (getMana(stack) <= 0 || !(entity instanceof PlayerEntity)) {
