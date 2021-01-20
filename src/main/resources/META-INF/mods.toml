@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[32,)"
+license="CC0"
+[[mods]]
+modId="mana2rf"
+version="${file.jarVersion}"
+displayName="Mana 2 RF"
+credits="Thank you botania devs, very cool"
+authors="Alwinfy"
+description='''
+Mana Tablets Provide RF Now
+'''
+[[dependencies.mana2rf]]
+    modId="forge"
+    mandatory=true
+    versionRange="[32,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.mana2rf]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16,1.17)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.mana2rf]]
+    modId="botania"
+    mandatory=true
+    versionRange="[1.16-398,)"
+    side="BOTH"

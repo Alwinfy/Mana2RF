@@ -1,0 +1,16 @@
+{
+  "minVersion": "0.8",
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "mana2rf.mixins.refmap.json",
+  "package": "net.alwinfy.mana2rf.mixin",
+  "mixins": [
+    "MixinEntitySpark",
+    "MixinEquipmentHandler",
+    "MixinInventoryManaDispensers",
+    "MixinTilePool"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
