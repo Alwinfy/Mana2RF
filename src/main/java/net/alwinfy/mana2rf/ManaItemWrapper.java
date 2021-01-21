@@ -10,7 +10,7 @@ public class ManaItemWrapper implements IEnergyStorage {
 	private final ItemStack stack;
 	private final IManaItem item;
 
-	private static final int MULTIPLIER = 10; // Will unhardcode if Botania does
+	private static final int MULTIPLIER = FEItemWrapper.MULTIPLIER;
 
 	public ManaItemWrapper(ItemStack stack, IManaItem item) {
 		this.stack = stack;
