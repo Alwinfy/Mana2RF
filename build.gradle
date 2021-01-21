@@ -18,7 +18,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.16-v1.0.2'
+version = '1.16-v1.0.3'
 group = 'net.alwinfy.mana2rf' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Mana2RF'
 
