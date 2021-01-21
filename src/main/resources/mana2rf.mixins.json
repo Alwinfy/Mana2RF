@@ -8,6 +8,7 @@
     "MixinEntitySpark",
     "MixinEquipmentHandler",
     "MixinInventoryManaDispensers",
+    "MixinItemManaMirror",
     "MixinTilePool"
   ],
   "injectors": {

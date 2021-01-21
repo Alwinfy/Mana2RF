@@ -11,22 +11,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import vazkii.botania.api.mana.IManaItem;
-import vazkii.botania.common.item.equipment.bauble.ItemManaRing;
-import vazkii.botania.common.item.ItemManaTablet;
+import vazkii.botania.common.item.ItemManaMirror;
 
 import net.alwinfy.mana2rf.ItemStackMixinUtil;
 
-@Mixin({ ItemManaRing.class, ItemManaTablet.class })
-public abstract class MixinInventoryManaDispensers extends Item implements IManaItem {
-	protected MixinInventoryManaDispensers() {
-		super(new Item.Properties());
-		throw new AssertionError();
-	}
-
-	@Override
-	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+@Mixin(ItemManaMirror.class) 
+public abstract class MixinItemManaMirror implements IManaItem {
+	@Inject(method = "inventoryTick(Lnet/minecraft/item/ItemStack;Lnet/minecraft/world/World;Lnet/minecraft/entity/Entity;IZ)V", at = @At("HEAD"))
+	public void injectInventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected, CallbackInfo ci) {
 		ItemStackMixinUtil.tickItem(this, stack, entity);
 	}
-
-
 }
