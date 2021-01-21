@@ -18,7 +18,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.16-v1.0.3'
+version = '1.16-v1.0.4'
 group = 'net.alwinfy.mana2rf' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Mana2RF'
 
@@ -26,6 +26,7 @@ mixin {
     add sourceSets.main, 'mana2rf.mixins.refmap.json'
 }
 
+compileJava.options.compilerArgs << "-Xlint:all,-classfile,-processing,-deprecation" << "-Werror"
 
 dependencies {
     compileOnly fg.deobf("vazkii.botania:Botania:1.16.4-410")
