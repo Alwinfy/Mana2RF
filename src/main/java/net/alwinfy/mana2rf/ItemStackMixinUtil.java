@@ -38,7 +38,7 @@ public final class ItemStackMixinUtil {
 		}
 	}
 	public static void moveMana(IManaItem item, ItemStack stack, ItemStack recv) {
-		if (!recv.isEmpty()) {
+		if (!recv.isEmpty() && !(recv.getItem() instanceof IManaItem)) {
 			recv.getCapability(CapabilityEnergy.ENERGY).ifPresent(storage -> {
 				if (storage.getEnergyStored() < storage.getMaxEnergyStored()) {
 					int feSent = storage.receiveEnergy(FEItemWrapper.MULTIPLIER * Math.min(ITEM_DISCHARGE_SPEED, item.getMana(stack)), false);
