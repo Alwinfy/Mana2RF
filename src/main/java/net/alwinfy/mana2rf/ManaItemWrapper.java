@@ -10,8 +10,6 @@ public class ManaItemWrapper implements IEnergyStorage {
 	private final ItemStack stack;
 	private final IManaItem item;
 
-	private static final int MULTIPLIER = FEItemWrapper.MULTIPLIER;
-
 	public ManaItemWrapper(ItemStack stack, IManaItem item) {
 		this.stack = stack;
 		this.item = item;
@@ -19,12 +17,12 @@ public class ManaItemWrapper implements IEnergyStorage {
 
 	@Override
 	public int getEnergyStored() {
-		return item.getMana(stack) * MULTIPLIER;
+		return item.getMana(stack) * BalanceConfig.conversionRate();
 	}
 
 	@Override
 	public int getMaxEnergyStored() {
-		return item.getMaxMana(stack) * MULTIPLIER;
+		return item.getMaxMana(stack) * BalanceConfig.conversionRate();
 	}
 
 	@Override
@@ -34,11 +32,12 @@ public class ManaItemWrapper implements IEnergyStorage {
 
 	@Override
 	public int extractEnergy(int cap, boolean simulate) {
-		int manaPull = Math.min(cap == 0 ? 0 : ((cap - 1) / MULTIPLIER + 1), item.getMana(stack));
+		int conversionRate = BalanceConfig.conversionRate();
+		int manaPull = Math.min(cap == 0 ? 0 : ((cap - 1) / conversionRate + 1), item.getMana(stack));
 		if (!simulate) {
 			item.addMana(stack, -manaPull);
 		}
-		return manaPull * MULTIPLIER;
+		return manaPull * conversionRate;
 	}
 
 	// No RF 2 mana in this good clean household

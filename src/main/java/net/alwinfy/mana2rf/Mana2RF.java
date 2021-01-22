@@ -10,7 +10,9 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,6 +28,7 @@ public class Mana2RF {
 
 	public Mana2RF() {
 		MinecraftForge.EVENT_BUS.addGenericListener(ItemStack.class, this::setup);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BalanceConfig.CONFIG_SPEC);
 
 		// Register ourselves for server and other game events we are interested in
 		MinecraftForge.EVENT_BUS.register(this);
@@ -39,7 +42,7 @@ public class Mana2RF {
 			event.addCapability(manaCapID, new ICapabilityProvider() {
 				@Override
 				public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction facing) {
-					if (!manaItem.isNoExport(stack)) {
+					if (!manaItem.isNoExport(stack) && BalanceConfig.canConvert(stack)) {
 						return CapabilityEnergy.ENERGY.orEmpty(cap, LazyOptional.of(() -> new ManaItemWrapper(stack, manaItem)));
 					}
 					return LazyOptional.empty();

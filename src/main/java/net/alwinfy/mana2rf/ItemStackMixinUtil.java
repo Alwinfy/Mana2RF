@@ -6,6 +6,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 
 public final class ItemStackMixinUtil {
 	public static final String TARGET = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;";
+	public static final String CONVERT_TAG = "mana2rf:can_convert";
 	public static final Item energyItemWrapper = new FEItemWrapper();
 
 	public static Item redirGetItem(ItemStack in) {

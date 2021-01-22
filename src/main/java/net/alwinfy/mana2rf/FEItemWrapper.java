@@ -15,16 +15,6 @@ import java.lang.reflect.Field;
 // Contractual guarantee: the ItemStack _will_ have CapabilityEnergy attached.
 // TODO: Some sort of cache?
 public class FEItemWrapper extends Item implements IManaItem {
-	public static final int MULTIPLIER;
-	static {
-		int m = 10;
-		try {
-			Field f = TileRFGenerator.class.getField("MANA_TO_RF");
-			f.setAccessible(true);
-			m = f.getInt(null);
-		} catch (ReflectiveOperationException ex) {}
-		MULTIPLIER = m;
-	}
 
 	public FEItemWrapper() {
 		super(new Properties());
@@ -38,20 +28,21 @@ public class FEItemWrapper extends Item implements IManaItem {
 	public int getMana(ItemStack stack) {
 		IEnergyStorage storage = unwrap(stack);
 		int maxStore = storage.getMaxEnergyStored();
+		int conversionRate = BalanceConfig.conversionRate();
 		// Account for rounding error
-		return maxStore / MULTIPLIER - (maxStore - storage.getEnergyStored()) / MULTIPLIER;
+		return maxStore / conversionRate - (maxStore - storage.getEnergyStored()) / conversionRate;
 	}
 
 	@Override
 	public int getMaxMana(ItemStack stack) {
-		return unwrap(stack).getMaxEnergyStored() / MULTIPLIER;
+		return unwrap(stack).getMaxEnergyStored() / BalanceConfig.conversionRate();
 	}
 
 	@Override
 	public void addMana(ItemStack stack, int mana) {
 		IEnergyStorage storage = unwrap(stack);
 		if (mana > 0)
-			storage.receiveEnergy(mana * MULTIPLIER, false);
+			storage.receiveEnergy(mana * BalanceConfig.conversionRate(), false);
 	}
 
 	@Override
