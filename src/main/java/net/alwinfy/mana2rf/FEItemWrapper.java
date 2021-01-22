@@ -28,21 +28,20 @@ public class FEItemWrapper extends Item implements IManaItem {
 	public int getMana(ItemStack stack) {
 		IEnergyStorage storage = unwrap(stack);
 		int maxStore = storage.getMaxEnergyStored();
-		int conversionRate = BalanceConfig.conversionRate();
 		// Account for rounding error
-		return maxStore / conversionRate - (maxStore - storage.getEnergyStored()) / conversionRate;
+		return maxStore / BalanceConfig.conversionRate - (maxStore - storage.getEnergyStored()) / BalanceConfig.conversionRate;
 	}
 
 	@Override
 	public int getMaxMana(ItemStack stack) {
-		return unwrap(stack).getMaxEnergyStored() / BalanceConfig.conversionRate();
+		return unwrap(stack).getMaxEnergyStored() / BalanceConfig.conversionRate;
 	}
 
 	@Override
 	public void addMana(ItemStack stack, int mana) {
 		IEnergyStorage storage = unwrap(stack);
 		if (mana > 0)
-			storage.receiveEnergy(mana * BalanceConfig.conversionRate(), false);
+			storage.receiveEnergy(mana * BalanceConfig.conversionRate, false);
 	}
 
 	@Override

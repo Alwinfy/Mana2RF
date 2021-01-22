@@ -28,14 +28,13 @@ import vazkii.botania.common.item.ItemManaTablet;
 import vazkii.botania.common.item.ItemManaMirror;
 
 import net.alwinfy.mana2rf.BalanceConfig;
+import net.alwinfy.mana2rf.ItemStackMixinUtil;
 
 import static vazkii.botania.common.block.ModBlocks.rfGenerator;
 import static vazkii.botania.common.core.handler.ModSounds.ding;
 
 @Mixin({ ItemManaRing.class, ItemManaTablet.class, ItemManaMirror.class })
 public abstract class MixinInventoryManaDispensers extends Item implements IManaItem {
-	private static final int ITEM_DISCHARGE_SPEED = 200;
-
 	protected MixinInventoryManaDispensers() {
 		super(new Item.Properties());
 		throw new AssertionError();
@@ -67,9 +66,8 @@ public abstract class MixinInventoryManaDispensers extends Item implements IMana
 		if (!recv.isEmpty() && !(recv.getItem() instanceof IManaItem)) {
 			recv.getCapability(CapabilityEnergy.ENERGY).ifPresent(storage -> {
 				if (storage.getEnergyStored() < storage.getMaxEnergyStored()) {
-					int conversionRate = BalanceConfig.conversionRate();
-					int feSent = storage.receiveEnergy(conversionRate * Math.min(ITEM_DISCHARGE_SPEED, getMana(stack)), false);
-					addMana(stack, -((feSent - 1) / conversionRate + 1));
+					int feSent = storage.receiveEnergy(BalanceConfig.conversionRate * Math.min(BalanceConfig.itemDischargeSpeed, getMana(stack)), false);
+					addMana(stack, -((feSent - 1) / BalanceConfig.conversionRate + 1));
 				}
 			});
 		}
@@ -87,6 +85,7 @@ public abstract class MixinInventoryManaDispensers extends Item implements IMana
 		ItemStack stack = ctx.getItem();
 		BlockPos pos = ctx.getPos();
 		if (!BalanceConfig.canConvert(stack) && ctx.getWorld().getBlockState(pos).isIn(rfGenerator)) {
+			stack.getOrCreateTag().putBoolean(ItemStackMixinUtil.CONVERT_TAG, true);
 			ctx.getWorld().playSound(null, pos.getX(), pos.getY(), pos.getZ(), ding, SoundCategory.PLAYERS, 1F, 1F);
 			cir.setReturnValue(ActionResultType.SUCCESS);
 		}

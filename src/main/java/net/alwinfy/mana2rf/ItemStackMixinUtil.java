@@ -12,5 +12,4 @@ public final class ItemStackMixinUtil {
 	public static Item redirGetItem(ItemStack in) {
 		return in.getCapability(CapabilityEnergy.ENERGY).isPresent() ? energyItemWrapper : in.getItem();
 	}
-
 }

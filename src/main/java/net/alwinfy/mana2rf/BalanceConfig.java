@@ -6,14 +6,18 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class BalanceConfig {
-	public final ForgeConfigSpec.IntValue conversionRate;
-	public final ForgeConfigSpec.BooleanValue fluxfieldGating;
+	public final ForgeConfigSpec.IntValue conversionRateSpec;
+	public final ForgeConfigSpec.IntValue itemDischargeSpeedSpec;
+	public final ForgeConfigSpec.BooleanValue fluxfieldGatingSpec;
 
 	public BalanceConfig(ForgeConfigSpec.Builder builder) {
-		conversionRate = builder
+		conversionRateSpec = builder
 			.comment("The amount of FE produced by one micromanapool (one millionth of a mana pool) of mana.")
 			.defineInRange("conversion_rate", 10, 1, 100);
-		fluxfieldGating = builder
+		itemDischargeSpeedSpec = builder
+			.comment("The number of micromanapools that mana items will discharge into FE items per tick.")
+			.defineInRange("item_discharge_speed", 200, 0, 2000000);
+		fluxfieldGatingSpec = builder
 			.comment("Does a mana item need to be right-clicked on a Mana Fluxfield to produce FE?")
 			.define("fluxfield_gating", false);
 	}
@@ -21,14 +25,12 @@ public class BalanceConfig {
 	public static final BalanceConfig CONFIG;
 	public static final ForgeConfigSpec CONFIG_SPEC;
 
-	public static int conversionRate() {
-		int val = CONFIG.conversionRate.get();
-		Mana2RF.LOGGER.warn(val);
-		return CONFIG.conversionRate.get();
-	}
+	public static int conversionRate = 10;
+	public static int itemDischargeSpeed = 200;
+	public static boolean shouldFluxfieldGate = false;
 
 	public static boolean canConvert(ItemStack stack) {
-		return !CONFIG.fluxfieldGating.get() || (stack.hasTag() && stack.getTag().getBoolean(ItemStackMixinUtil.CONVERT_TAG));
+		return !shouldFluxfieldGate || (stack.hasTag() && stack.getTag().getBoolean(ItemStackMixinUtil.CONVERT_TAG));
 	}
 
 	static {
