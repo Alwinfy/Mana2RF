@@ -15,10 +15,10 @@ public class BalanceConfig {
 			.comment("The amount of FE produced by one micromanapool (one millionth of a mana pool) of mana.")
 			.defineInRange("conversion_rate", 10, 1, 100);
 		itemDischargeSpeedSpec = builder
-			.comment("The number of micromanapools that mana items will discharge into FE items per tick.")
-			.defineInRange("item_discharge_speed", 200, 0, 2000000);
+			.comment("The amount of FE that mana items will discharge into FE items per tick.")
+			.defineInRange("item_discharge_speed", 10000, 0, 2000000);
 		fluxfieldGatingSpec = builder
-			.comment("Does a mana item need to be right-clicked on a Mana Fluxfield to produce FE?")
+			.comment("Does a mana item need to be right-clicked on a Mana Fluxfield before it can produce FE?")
 			.define("fluxfield_gating", false);
 	}
 
@@ -26,7 +26,7 @@ public class BalanceConfig {
 	public static final ForgeConfigSpec CONFIG_SPEC;
 
 	public static int conversionRate = 10;
-	public static int itemDischargeSpeed = 200;
+	public static int itemDischargeSpeed = 10000;
 	public static boolean shouldFluxfieldGate = false;
 
 	public static boolean canConvert(ItemStack stack) {

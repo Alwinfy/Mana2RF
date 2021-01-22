@@ -8,7 +8,8 @@
     "MixinEntitySpark",
     "MixinEquipmentHandler",
     "MixinInventoryManaDispensers",
-    "MixinTilePool"
+    "MixinTilePool",
+    "MixinTileRFGenerator"
   ],
   "injectors": {
     "defaultRequire": 1
