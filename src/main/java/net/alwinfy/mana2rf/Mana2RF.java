@@ -10,10 +10,12 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,9 +33,15 @@ public class Mana2RF {
 		MinecraftForge.EVENT_BUS.addGenericListener(ItemStack.class, this::setup);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BalanceConfig.CONFIG_SPEC);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::reloadConfig);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::loadConfig);
+		MinecraftForge.EVENT_BUS.addListener(this::registerCommands);
 
 		// Register ourselves for server and other game events we are interested in
 		MinecraftForge.EVENT_BUS.register(this);
+	}
+
+	private void registerCommands(RegisterCommandsEvent event) {
+		Mana2RFCommand.register(event.getDispatcher());
 	}
 
 	private void setup(AttachCapabilitiesEvent<ItemStack> event) {
@@ -53,11 +61,15 @@ public class Mana2RF {
 		}
 	}
 
-	private void reloadConfig(ModConfig.ModConfigEvent event) {
+	private void reloadConfig(ModConfig.Reloading event) {
 		if (event.getConfig().getSpec() == BalanceConfig.CONFIG_SPEC) {
-			BalanceConfig.conversionRate = BalanceConfig.CONFIG.conversionRateSpec.get();
-			BalanceConfig.itemDischargeSpeed = BalanceConfig.CONFIG.conversionRateSpec.get();
-			BalanceConfig.shouldFluxfieldGate = BalanceConfig.CONFIG.fluxfieldGatingSpec.get();
+			BalanceConfig.bakeConfig();
+		}
+	}
+
+	private void loadConfig(ModConfig.Loading event) {
+		if (event.getConfig().getSpec() == BalanceConfig.CONFIG_SPEC) {
+			BalanceConfig.bakeConfig();
 		}
 	}
 }
