@@ -66,7 +66,7 @@ public abstract class MixinInventoryManaDispensers extends Item implements IMana
 		if (!recv.isEmpty() && !(recv.getItem() instanceof IManaItem)) {
 			recv.getCapability(CapabilityEnergy.ENERGY).ifPresent(storage -> {
 				if (storage.getEnergyStored() < storage.getMaxEnergyStored()) {
-					int feSent = storage.receiveEnergy(BalanceConfig.conversionRate * Math.min(BalanceConfig.itemDischargeSpeed, getMana(stack)), false);
+					int feSent = storage.receiveEnergy(Math.min(BalanceConfig.itemDischargeSpeed, BalanceConfig.conversionRate * getMana(stack)), false);
 					addMana(stack, -((feSent - 1) / BalanceConfig.conversionRate + 1));
 				}
 			});
