@@ -33,6 +33,12 @@ public class BalanceConfig {
 		return !shouldFluxfieldGate || (stack.hasTag() && stack.getTag().getBoolean(ItemStackMixinUtil.CONVERT_TAG));
 	}
 
+	public static void bakeConfig() {
+		conversionRate = CONFIG.conversionRateSpec.get();
+		itemDischargeSpeed = CONFIG.itemDischargeSpeedSpec.get();
+		shouldFluxfieldGate = CONFIG.fluxfieldGatingSpec.get();
+	}
+
 	static {
 		Pair<BalanceConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(BalanceConfig::new);
 		CONFIG = specPair.getLeft();
