@@ -23,18 +23,20 @@ public class Mana2RFCommand {
 					.executes(context -> {
 						BalanceConfig.conversionRate = context.getArgument("conversion_rate", Integer.class);
 						BalanceConfig.CONFIG.conversionRateSpec.set(BalanceConfig.conversionRate);
+						context.getSource().sendFeedback(new StringTextComponent("conversion_rate ::= " + BalanceConfig.conversionRate), true);
 						return Command.SINGLE_SUCCESS;
 					}))
 				.executes(context -> {
 					context.getSource().sendFeedback(new StringTextComponent("conversion_rate = " + BalanceConfig.conversionRate), false);
 					return Command.SINGLE_SUCCESS;
-				})
+				}))
 			.then(Commands.literal("item_discharge_speed")
 				.then(Commands.argument("discharge_speed", IntegerArgumentType.integer(0, 2000000))
 					.requires(source -> source.hasPermissionLevel(2))
 					.executes(context -> {
 						BalanceConfig.itemDischargeSpeed = context.getArgument("discharge_speed", Integer.class);
 						BalanceConfig.CONFIG.itemDischargeSpeedSpec.set(BalanceConfig.itemDischargeSpeed);
+						context.getSource().sendFeedback(new StringTextComponent("item_discharge_speed ::= " + BalanceConfig.itemDischargeSpeed), true);
 						return Command.SINGLE_SUCCESS;
 					}))
 				.executes(context -> {
@@ -47,12 +49,13 @@ public class Mana2RFCommand {
 					.executes(context -> {
 						BalanceConfig.shouldFluxfieldGate = context.getArgument("fluxfield_gating", Boolean.class);
 						BalanceConfig.CONFIG.fluxfieldGatingSpec.set(BalanceConfig.shouldFluxfieldGate);
+						context.getSource().sendFeedback(new StringTextComponent("fluxfield_gating ::= " + BalanceConfig.shouldFluxfieldGate), true);
 						return Command.SINGLE_SUCCESS;
 					}))
 				.executes(context -> {
 					context.getSource().sendFeedback(new StringTextComponent("fluxfield_gating = " + BalanceConfig.shouldFluxfieldGate), false);
 					return Command.SINGLE_SUCCESS;
-				})));
+				}));
 		LiteralCommandNode<CommandSource> command = dispatcher.register(commandBuilder);
 	}
 }

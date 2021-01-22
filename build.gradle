@@ -18,7 +18,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.16-v1.0.4'
+version = '1.16-v1.1.0'
 group = 'net.alwinfy.mana2rf'
 archivesBaseName = 'Mana2RF'
 
