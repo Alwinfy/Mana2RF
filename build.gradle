@@ -28,7 +28,6 @@ mixin {
 
 compileJava.options.compilerArgs << "-Xlint:all,-classfile,-processing,-deprecation" << "-Werror"
 
-
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
@@ -104,6 +103,8 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.4-35.1.37'
 
+    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.4-4.0.3.0:api")
@@ -130,4 +131,3 @@ jar {
 
 
 jar.finalizedBy('reobfJar') 
-

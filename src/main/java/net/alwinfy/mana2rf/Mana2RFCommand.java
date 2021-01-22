@@ -26,7 +26,7 @@ public class Mana2RFCommand {
 						return Command.SINGLE_SUCCESS;
 					}))
 				.executes(context -> {
-					context.sendFeedback(new StringTextComponent("conversion_rate = " + BalanceConfig.conversionRate), false);
+					context.getSource().sendFeedback(new StringTextComponent("conversion_rate = " + BalanceConfig.conversionRate), false);
 					return Command.SINGLE_SUCCESS;
 				})
 			.then(Commands.literal("item_discharge_speed")
@@ -38,9 +38,9 @@ public class Mana2RFCommand {
 						return Command.SINGLE_SUCCESS;
 					}))
 				.executes(context -> {
-					context.sendFeedback(new StringTextComponent("item_discharge_speed = " + BalanceConfig.itemDischargeSpeed), false);
+					context.getSource().sendFeedback(new StringTextComponent("item_discharge_speed = " + BalanceConfig.itemDischargeSpeed), false);
 					return Command.SINGLE_SUCCESS;
-				}));
+				}))
 			.then(Commands.literal("fluxfield_gating")
 				.then(Commands.argument("fluxfield_gating", BoolArgumentType.bool())
 					.requires(source -> source.hasPermissionLevel(2))
@@ -50,9 +50,9 @@ public class Mana2RFCommand {
 						return Command.SINGLE_SUCCESS;
 					}))
 				.executes(context -> {
-					context.sendFeedback(new StringTextComponent("fluxfield_gating = " + BalanceConfig.shouldFluxfieldGate), false);
+					context.getSource().sendFeedback(new StringTextComponent("fluxfield_gating = " + BalanceConfig.shouldFluxfieldGate), false);
 					return Command.SINGLE_SUCCESS;
-				}));
+				})));
 		LiteralCommandNode<CommandSource> command = dispatcher.register(commandBuilder);
 	}
 }
